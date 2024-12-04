@@ -1,0 +1,96 @@
+/* BonusCardRegistration.css */
+.bonus-card-registration {
+   max-width: 600px;
+   margin: 20px auto;
+   padding: 30px;
+   border: 1px solid #ddd;
+   border-radius: 12px;
+   background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bonus-card-registration h3 {
+   text-align: center;
+   font-size: 28px;
+   color: #2c3e50;
+   margin-bottom: 20px;
+}
+
+.bonus-card-registration form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+
+.bonus-card-registration label {
+   font-size: 16px;
+   color: #34495e;
+   margin-bottom: 8px;
+}
+
+.bonus-card-registration input,
+.bonus-card-registration select,
+.bonus-card-registration button {
+   padding: 12px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   background-color: white;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bonus-card-registration input[type="tel"],
+.bonus-card-registration input[type="date"],
+.bonus-card-registration input[type="text"] {
+   width: 100%;
+}
+
+.bonus-card-registration button {
+   background-color: #3498db;
+   color: white;
+   cursor: pointer;
+   transition: background-color 0.3s;
+}
+
+.bonus-card-registration button:hover {
+   background-color: #2980b9;
+}
+
+.bonus-card-registration p {
+   text-align: center;
+   font-size: 16px;
+   color: green;
+}
+
+.bonus-card-registration .error-message {
+   color: red;
+   text-align: center;
+}
+
+.bonus-card-registration input:focus,
+.bonus-card-registration select:focus {
+   outline: none;
+   border-color: #3498db;
+   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+@media (max-width: 480px) {
+   .bonus-card-registration {
+      padding: 15px;
+   }
+
+   .bonus-card-registration h3 {
+      font-size: 24px;
+   }
+
+   .bonus-card-registration label {
+      font-size: 14px;
+   }
+
+   .bonus-card-registration input,
+   .bonus-card-registration select,
+   .bonus-card-registration button {
+      font-size: 14px;
+      padding: 10px;
+   }
+}

@@ -1,0 +1,97 @@
+-- Создание таблицы для категорий меню
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY IDENTITY(1,1), -- Уникальный идентификатор категории
+    Name NVARCHAR(100) NOT NULL                -- Название категории
+);
+
+-- Создание таблицы для бонусных карт
+CREATE TABLE BonusCards (
+    CardID INT PRIMARY KEY IDENTITY(1,1),        -- Уникальный идентификатор карты
+    FirstName NVARCHAR(100) NOT NULL,            -- Имя пользователя
+    LastName NVARCHAR(100) NOT NULL,             -- Фамилия пользователя
+    Phone NVARCHAR(15) NOT NULL UNIQUE,          -- Телефон (уникальный)
+    BirthDate DATE NOT NULL,                     -- Дата рождения
+    Gender CHAR(1) CHECK (Gender IN ('М', 'Ж')), -- Пол
+    SmsCode NVARCHAR(10),                        -- Код подтверждения из СМС
+    CreatedAt DATETIME DEFAULT GETDATE()         -- Дата регистрации карты
+);
+
+-- Создание таблицы для бронирования столиков
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY IDENTITY(1,1), -- Уникальный идентификатор брони
+    ReservationDate DATE NOT NULL,                -- Дата брони
+    ReservationTime VARCHAR(10) NOT NULL,                -- Время брони
+    GuestCount INT CHECK (GuestCount BETWEEN 2 AND 15) NOT NULL, -- Количество гостей (от 2 до 15)
+    GuestName NVARCHAR(100) NOT NULL,             -- Имя клиента
+    GuestPhone NVARCHAR(15) NOT NULL,             -- Телефон клиента
+    Address NVARCHAR(255) NOT NULL,               -- Адрес заведения
+    CreatedAt DATETIME DEFAULT GETDATE(),         -- Дата создания брони
+    CardID INT,                                   -- Внешний ключ на бонусную карту
+    FOREIGN KEY (CardID) REFERENCES BonusCards(CardID) -- Связь с бонусной картой
+);
+
+-- Создание таблицы для блюд меню
+CREATE TABLE MenuItems (
+    MenuItemID INT PRIMARY KEY IDENTITY(1,1),    -- Уникальный идентификатор блюда
+    Name NVARCHAR(255) NOT NULL,                  -- Название блюда
+    Weight INT NOT NULL,                          -- Вес в граммах
+    Ingredients NVARCHAR(MAX) NOT NULL,           -- Список ингредиентов
+    Price INT NOT NULL,                           -- Цена блюда
+    ImagePath NVARCHAR(255) NULL,                 -- Ссылка на картинку блюда
+    CreatedAt DATETIME DEFAULT GETDATE(),        -- Дата добавления блюда
+    CategoryID INT,                               -- Внешний ключ на категорию
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) -- Связь с категорией
+);
+
+-- Создание таблицы для транзакций бонусных карт
+CREATE TABLE BonusTransactions (
+    TransactionID INT PRIMARY KEY IDENTITY(1,1), -- Уникальный идентификатор транзакции
+    CardID INT FOREIGN KEY REFERENCES BonusCards(CardID), -- Внешний ключ на бонусную карту
+    PointsEarned INT NOT NULL,                    -- Начисленные бонусы
+    TransactionDate DATETIME DEFAULT GETDATE(),   -- Дата транзакции
+    Description NVARCHAR(255) NULL                -- Описание транзакции
+);
+
+-- Заполнение таблицы Categories
+INSERT INTO Categories (Name)
+VALUES
+('Закуски'),
+('Горячие блюда'),
+('Десерты'),
+('Напитки');
+
+-- Заполнение таблицы BonusCards
+INSERT INTO BonusCards (FirstName, LastName, Phone, BirthDate, Gender, SmsCode)
+VALUES
+('Иван', 'Петров', '+79998887766', '1990-01-15', 'М', '1234'),
+('Мария', 'Смирнова', '+79993334455', '1985-03-22', 'Ж', '5678'),
+('Алексей', 'Васильев', '+79992221100', '1992-07-10', 'М', '2345'),
+('Анна', 'Григорьева', '+79991112233', '1988-11-30', 'Ж', '6789'),
+('Олег', 'Иванов', '+79994445566', '1995-09-18', 'М', '3456');
+
+-- Заполнение таблицы MenuItems
+INSERT INTO MenuItems (Name, Weight, Ingredients, Price, ImagePath, CategoryID)
+VALUES
+('Хинкали с мясом', 250, 'Говядина, свинина, лук, специи, тесто', 350, 'images/hinkali_myasom.jpg', 2),
+('Хинкали с сыром', 230, 'Сыр, зелень, тесто', 400, 'images/hinkali_syrom.jpg', 2),
+('Хинкали с картошкой', 220, 'Картофель, сыр, зелень, тесто', 300, 'images/hinkali_kartoshka.jpg', 2),
+('Хинкали с грибами', 240, 'Грибы, сыр, зелень, тесто', 380, 'images/hinkali_gribami.jpg', 2),
+('Хинкали с курицей', 250, 'Курица, лук, зелень, тесто', 330, 'images/hinkali_kurica.jpg', 2);
+
+-- Заполнение таблицы Reservations
+INSERT INTO Reservations (ReservationDate, ReservationTime, GuestCount, GuestName, GuestPhone, Address, CardID)
+VALUES
+('2024-12-10', '18:30', 4, 'Иван Петров', '+79998887766', 'ул. Ленина, 10, Москва', 1),
+('2024-12-11', '19:00', 2, 'Мария Смирнова', '+79993334455', 'ул. Тверская, 5, Москва', 2),
+('2024-12-12', '20:00', 6, 'Алексей Васильев', '+79992221100', 'ул. Арбат, 8, Москва', 3),
+('2024-12-15', '14:30', 8, 'Анна Григорьева', '+79991112233', 'ул. Пушкина, 2, Санкт-Петербург', 4),
+('2024-12-16', '12:00', 3, 'Олег Иванов', '+79994445566', 'ул. Чехова, 15, Казань', 5);
+
+-- Заполнение таблицы BonusTransactions
+INSERT INTO BonusTransactions (CardID, PointsEarned, TransactionDate, Description)
+VALUES
+(1, 100, '2024-12-01', 'Покупка хинкали с мясом'),
+(2, 150, '2024-12-03', 'Покупка хинкали с сыром'),
+(3, 200, '2024-12-05', 'Покупка хинкали с картошкой'),
+(4, 50, '2024-12-07', 'Покупка хинкали с грибами'),
+(5, 120, '2024-12-09', 'Покупка хинкали с курицей');

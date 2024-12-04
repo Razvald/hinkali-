@@ -1,0 +1,98 @@
+/* ReservationForm.css */
+.reservation-form-container {
+   max-width: 600px;
+   margin: 20px auto;
+   padding: 30px;
+   border: 1px solid #ddd;
+   border-radius: 12px;
+   background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-form-container h3 {
+   text-align: center;
+   font-size: 28px;
+   color: #2c3e50;
+   margin-bottom: 20px;
+}
+
+.reservation-form-container form {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+}
+
+.reservation-form-container label {
+   font-size: 16px;
+   color: #34495e;
+   margin-bottom: 8px;
+}
+
+.reservation-form-container input,
+.reservation-form-container select,
+.reservation-form-container button {
+   padding: 12px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   background-color: white;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-form-container input[type="text"],
+.reservation-form-container input[type="tel"],
+.reservation-form-container input[type="number"],
+.reservation-form-container input[type="date"],
+.reservation-form-container input[type="time"] {
+   width: 100%;
+}
+
+.reservation-form-container button {
+   background-color: #3498db;
+   color: white;
+   cursor: pointer;
+   transition: background-color 0.3s;
+}
+
+.reservation-form-container button:hover {
+   background-color: #2980b9;
+}
+
+.reservation-form-container p {
+   text-align: center;
+   font-size: 16px;
+   color: green;
+}
+
+.reservation-form-container .error-message {
+   color: red;
+   text-align: center;
+}
+
+.reservation-form-container input:focus,
+.reservation-form-container select:focus {
+   outline: none;
+   border-color: #3498db;
+   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+@media (max-width: 480px) {
+   .reservation-form-container {
+      padding: 15px;
+   }
+
+   .reservation-form-container h3 {
+      font-size: 24px;
+   }
+
+   .reservation-form-container label {
+      font-size: 14px;
+   }
+
+   .reservation-form-container input,
+   .reservation-form-container select,
+   .reservation-form-container button {
+      font-size: 14px;
+      padding: 10px;
+   }
+}
